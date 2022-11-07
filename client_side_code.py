@@ -19,7 +19,11 @@ def get_file_from_the_server():
 	socket_at_client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 	print("[*] Connecting to Server: ",host_name," Port: ",port[0])
-	socket_at_client.connect(("localhost", port[0]))
+	try:
+		socket_at_client.connect(("localhost", port[0]))
+	except:
+		print("[*] Something went wrong!!!! Server might not be UP with Portnumber: ",port[0])
+		return
  
 	#Take in the file name and the method to be used
 	request_type = input("[*] Enter the Request type (Eg: GET/POST): ")
@@ -40,8 +44,10 @@ def get_file_from_the_server():
 	print("\n\n[******** WEB REQ END ********]\n\n")
  
 	#Send Request to server
-	socket_at_client.send(Operation)
-
+	try:
+		socket_at_client.send(Operation)
+	except:
+		print("[*] Something went wrong!! Problem seen while sending to server with Portnumber: ",port[0])
 	#Recieve request from the server
 	file_info = socket_at_client.recv(SEND_BUFFER_SIZE).decode()
  

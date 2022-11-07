@@ -44,8 +44,10 @@ def Send_all_files(client_socket):
 	data += "</body></html>"
 	print("[******** WEB RESPONSE ********]\n\n",data)
 	print("[******** WEB RESP END ********]\n\n")
-	client_socket.sendall(data.encode())
-	client_socket.close()
+	try:
+		client_socket.sendall(data.encode())
+	except:
+		print("\n\n[*] Problem Seen while Sending to Client with 200 OK Message")
 
 def write_the_contents_of_the_file_to_web_page(file_name_requested,client_socket):
     		
@@ -69,8 +71,11 @@ def write_the_contents_of_the_file_to_web_page(file_name_requested,client_socket
 	data += "</body></html>"
 	print("[******** WEB RESPONSE ********]\n\n",data)
 	print("[******** WEB RESP END ********]\n\n")
-	client_socket.sendall(data.encode())
-	client_socket.close()
+ 
+	try:
+		client_socket.sendall(data.encode())
+	except:
+		print("\n\n[*] Problem Seen while Sending to Client with 200 OK Message")
  
 def send_404_file_not_found_request(client_socket):
     #If the said/requested file is not present then send 404 error to the client
@@ -90,8 +95,10 @@ def send_404_file_not_found_request(client_socket):
 	print("[******** WEB RESPONSE ********]\n\n",data)
 	print("[******** WEB RESP END ********]\n\n")
 	
-	client_socket.sendall(data.encode())
-	client_socket.close()
+	try:
+		client_socket.sendall(data.encode())
+	except:
+		print("\n\n[*] Problem Seen while Sending to Client with 404 Message")
 
 def send_400_bad_reques(client_socket):
     print("\n\n[*] Sending BAD request as not GET Method")
@@ -109,7 +116,12 @@ def send_400_bad_reques(client_socket):
     data += "</body></html>"
     print("[******** WEB RESPONSE ********]\n\n",data)
     print("[******** WEB RESP END ********]\n\n")
-    client_socket.sendall(data.encode())
+    
+    try:
+        client_socket.sendall(data.encode())
+    except:
+        print("\n\n[*] Problem Seen while Sending to Client with 400 Message")
+        
     client_socket.close()
     
      
@@ -180,4 +192,8 @@ def create_server_listen():
 
 if __name__ == "__main__":
 	print("\n[**** STARTING WEB SERVER ****]\n")
-	create_server_listen()
+	try:
+		create_server_listen()
+	except KeyboardInterrupt:
+		print("\n\n[*] Keyboard Interrupt!! Killing Server")
+
